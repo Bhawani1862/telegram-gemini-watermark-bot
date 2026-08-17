@@ -1,0 +1,24 @@
+services:
+  telegram-watermark-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: telegram-watermark-bot
+    env_file:
+      - .env
+    restart: unless-stopped
+    init: true
+    shm_size: "1gb"
+    mem_limit: "7g"
+    cpus: "4.0"
+    pids_limit: 512
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=1g
+    volumes:
+      - bot-tmp:/app/tmp
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  bot-tmp:
